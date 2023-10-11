@@ -25,3 +25,4 @@ Route::get('/artists', [ArtistController::class, 'index']);
 Route::get('/artists/{artist}', [ArtistController::class, 'show']);
 
 Route::get('/albums', [AlbumController::class, 'index']);
+Route::get('/albums/{album}', [AlbumController::class, 'show']);

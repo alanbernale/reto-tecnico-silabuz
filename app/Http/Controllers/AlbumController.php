@@ -45,9 +45,10 @@ class AlbumController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Album $album)
+    public function show(Album $album): JsonResponse
     {
-        //
+        // Devolver una respuesta JSON con los detalles del álbum
+        return response()->json(['data' => $album], Response::HTTP_OK);
     }
 
     /**
