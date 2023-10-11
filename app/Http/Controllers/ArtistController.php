@@ -7,6 +7,12 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @OA\Tag(
+ *      name="Artists",
+ *      description="Operaciones relacionadas con los artistas."
+ * )
+ */
 class ArtistController extends Controller
 {
     public function __construct()
@@ -15,7 +21,22 @@ class ArtistController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Mostrar una lista del recurso.
+     *
+     * @OA\Get(
+     *     path="/api/artists",
+     *     summary="Obtener todos los artistas",
+     *     tags={"Artists"},
+     *     operationId="artistIndex",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Lista de artistas",
+     *         @OA\Schema(
+     *             type="array",
+     *             @OA\Items(ref="#/definitions/Artist")
+     *         )
+     *     )
+     * )
      */
     public function index(): JsonResponse
     {
@@ -43,7 +64,30 @@ class ArtistController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Muestra el recurso especificado.
+     *
+     * @OA\Get(
+     *     path="/api/artists/{id}",
+     *     summary="Obtener los detalles de un artista",
+     *     tags={"Artists"},
+     *     operationId="artistShow",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID del artista a consultar",
+     *         required=true,
+     *         @OA\Schema(type="uuid"),
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Detalles del artista",
+     *         @OA\Schema(ref="#/definitions/Artist")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Artista no encontrado"
+     *     )
+     * )
      */
     public function show(Artist $artist): JsonResponse
     {

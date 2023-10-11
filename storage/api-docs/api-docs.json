@@ -1,0 +1,272 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Deezer Clone",
+        "description": "API Deezer Clone para prueba técnica de Silabuz.",
+        "contact": {
+            "name": "Alan Bernal E."
+        },
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "https://reto-tecnico-silabuz.test/",
+            "description": "API server"
+        }
+    ],
+    "paths": {
+        "/api/albums": {
+            "get": {
+                "tags": [
+                    "Albums"
+                ],
+                "summary": "Obtener todos los álbumes",
+                "description": "Mostrar una lista del recurso.",
+                "operationId": "albumIndex",
+                "responses": {
+                    "200": {
+                        "description": "Lista de álbumes"
+                    }
+                }
+            }
+        },
+        "/api/albums/{id}": {
+            "get": {
+                "tags": [
+                    "Albums"
+                ],
+                "summary": "Obtener los detalles de un álbum",
+                "description": "Muestra el recurso especificado.",
+                "operationId": "albumShow",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del álbum a consultar",
+                        "required": true,
+                        "schema": {
+                            "type": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalles del álbum"
+                    },
+                    "404": {
+                        "description": "Álbum no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/artists": {
+            "get": {
+                "tags": [
+                    "Artists"
+                ],
+                "summary": "Obtener todos los artistas",
+                "description": "Mostrar una lista del recurso.",
+                "operationId": "artistIndex",
+                "responses": {
+                    "200": {
+                        "description": "Lista de artistas"
+                    }
+                }
+            }
+        },
+        "/api/artists/{id}": {
+            "get": {
+                "tags": [
+                    "Artists"
+                ],
+                "summary": "Obtener los detalles de un artista",
+                "description": "Muestra el recurso especificado.",
+                "operationId": "artistShow",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del artista a consultar",
+                        "required": true,
+                        "schema": {
+                            "type": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalles del artista"
+                    },
+                    "404": {
+                        "description": "Artista no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Autenticación de usuarios",
+                "operationId": "login",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Dirección de correo electrónico del usuario",
+                        "required": true,
+                        "schema": {
+                            "type": "email"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Contraseña del usuario",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "device_name",
+                        "in": "query",
+                        "description": "Nombre del dispositivo",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Inicio de sesión exitoso"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    },
+                    "401": {
+                        "description": "Credenciales incorrectas"
+                    }
+                }
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Desautenticación de usuarios",
+                "operationId": "logout",
+                "responses": {
+                    "200": {
+                        "description": "Sesión cerrada exitosamente"
+                    }
+                }
+            }
+        },
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Registro de usuario",
+                "operationId": "register",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Nombre del usuario",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Dirección de correo electrónico del usuario",
+                        "required": true,
+                        "schema": {
+                            "type": "email"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Contraseña del usuario",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password_confirmation",
+                        "in": "query",
+                        "description": "Confirmación de contraseña",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "country",
+                        "in": "query",
+                        "description": "País del usuario",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "device_name",
+                        "in": "query",
+                        "description": "Nombre del dispositivo",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Registro exitoso"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "name": "bearerAuth",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Albums",
+            "description": "Operaciones relacionadas con los álbumes."
+        },
+        {
+            "name": "Artists",
+            "description": "Operaciones relacionadas con los artistas."
+        },
+        {
+            "name": "Authentication",
+            "description": "Operaciones relacionadas con la autenticación."
+        },
+        {
+            "name": "Authentication",
+            "description": "Operaciones relacionadas con la autenticación."
+        }
+    ]
+}
