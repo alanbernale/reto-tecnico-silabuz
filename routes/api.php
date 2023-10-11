@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -22,3 +23,5 @@ Route::post('register', [RegisterController::class, 'register']);
 
 Route::get('/artists', [ArtistController::class, 'index']);
 Route::get('/artists/{artist}', [ArtistController::class, 'show']);
+
+Route::get('/albums', [AlbumController::class, 'index']);
