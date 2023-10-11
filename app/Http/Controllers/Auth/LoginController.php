@@ -7,9 +7,15 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpFoundation\Response;
 
 class LoginController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum')->only(['logout']);
+    }
+
     public function login(Request $request)
     {
         $request->validate([
@@ -27,5 +33,14 @@ class LoginController extends Controller
         }
 
         return $user->createToken($request->device_name)->plainTextToken;
+    }
+
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+
+        return response()->json([
+            'token' => 'The token was removed.'
+        ], Response::HTTP_OK);
     }
 }
