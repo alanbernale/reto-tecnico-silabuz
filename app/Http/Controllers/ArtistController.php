@@ -45,9 +45,10 @@ class ArtistController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Artist $artist)
+    public function show(Artist $artist): JsonResponse
     {
-        //
+        // Devolver una respuesta JSON con los detalles del artista
+        return response()->json(['data' => $artist], Response::HTTP_OK);
     }
 
     /**

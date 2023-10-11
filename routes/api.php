@@ -21,3 +21,4 @@ Route::post('logout', [LoginController::class, 'logout']);
 Route::post('register', [RegisterController::class, 'register']);
 
 Route::get('/artists', [ArtistController::class, 'index']);
+Route::get('/artists/{artist}', [ArtistController::class, 'show']);
