@@ -4,6 +4,7 @@ use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\TrackController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,3 +27,5 @@ Route::get('/artists/{artist}', [ArtistController::class, 'show']);
 
 Route::get('/albums', [AlbumController::class, 'index']);
 Route::get('/albums/{album}', [AlbumController::class, 'show']);
+
+Route::get('/tracks', [TrackController::class, 'index']);
