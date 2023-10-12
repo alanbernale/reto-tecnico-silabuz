@@ -239,6 +239,35 @@
                 }
             }
         },
+        "/api/search": {
+            "get": {
+                "tags": [
+                    "Search"
+                ],
+                "summary": "Buscar pistas por nombre, nombre de artistas y nombre de álbumes",
+                "description": "Handle the incoming request.",
+                "operationId": "searchInvoke",
+                "parameters": [
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "description": "Término de búsqueda",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Búsqueda exitosa"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            }
+        },
         "/api/tracks": {
             "get": {
                 "tags": [
@@ -311,6 +340,10 @@
         {
             "name": "Authentication",
             "description": "Operaciones relacionadas con la autenticación."
+        },
+        {
+            "name": "Search",
+            "description": "Operaciones relacionadas con la búsqueda."
         },
         {
             "name": "Tracks",

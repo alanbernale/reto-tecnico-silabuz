@@ -4,8 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SearchRequest;
 use App\Models\Track;
+use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @OA\Tag(
+ *      name="Search",
+ *      description="Operaciones relacionadas con la búsqueda."
+ *  )
+ */
 class SearchController extends Controller
 {
     public function __construct()
@@ -15,8 +22,42 @@ class SearchController extends Controller
 
     /**
      * Handle the incoming request.
+     *
+     * @param SearchRequest $request
+     * @return JsonResponse
+     *
+     * @OA\Get(
+     *      path="/api/search",
+     *      summary="Buscar pistas por nombre, nombre de artistas y nombre de álbumes",
+     *      tags={"Search"},
+     *      operationId="searchInvoke",
+     *      @OA\Parameter(
+     *          name="q",
+     *          in="query",
+     *          description="Término de búsqueda",
+     *          required=true,
+     *          @OA\Schema(type="string"),
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Búsqueda exitosa",
+     *          @OA\Schema(
+     *              type="array",
+     *              @OA\Items(ref="#/definitions/Track")
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="Error de validación",
+     *          @OA\Schema(
+     *              type="object",
+     *              @OA\Property(property="message", type="string"),
+     *              @OA\Property(property="errors", type="object"),
+     *          )
+     *      )
+     *  )
      */
-    public function __invoke(SearchRequest $request)
+    public function __invoke(SearchRequest $request): JsonResponse
     {
         // Obtener el campo "q" validado
         $validated = $request->validated();
