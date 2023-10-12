@@ -109,6 +109,7 @@
                     "Authentication"
                 ],
                 "summary": "Autenticación de usuarios",
+                "description": "Método para el manejo de inicio de sesión. Devuelve un Token de acceso.",
                 "operationId": "login",
                 "parameters": [
                     {
@@ -158,6 +159,7 @@
                     "Authentication"
                 ],
                 "summary": "Desautenticación de usuarios",
+                "description": "Método para el cierre de sesión. Elimina el token de acceso.",
                 "operationId": "logout",
                 "responses": {
                     "200": {
@@ -172,6 +174,7 @@
                     "Authentication"
                 ],
                 "summary": "Registro de usuario",
+                "description": "Método para el manejo de registro de usuarios. Devuelve un Token de acceso.",
                 "operationId": "register",
                 "parameters": [
                     {
@@ -245,7 +248,7 @@
                     "Search"
                 ],
                 "summary": "Buscar pistas por nombre, nombre de artistas y nombre de álbumes",
-                "description": "Handle the incoming request.",
+                "description": "Método para el manejo de la búsqueda de pistas. Devuelve una colección de pistas.",
                 "operationId": "searchInvoke",
                 "parameters": [
                     {
