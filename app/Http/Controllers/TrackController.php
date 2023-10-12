@@ -47,7 +47,8 @@ class TrackController extends Controller
      */
     public function show(Track $track): JsonResponse
     {
-        //
+        // Devolver una respuesta JSON con los detalles de la pista
+        return response()->json(['data' => $track], Response::HTTP_OK);
     }
 
     /**

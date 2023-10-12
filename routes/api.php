@@ -29,3 +29,4 @@ Route::get('/albums', [AlbumController::class, 'index']);
 Route::get('/albums/{album}', [AlbumController::class, 'show']);
 
 Route::get('/tracks', [TrackController::class, 'index']);
+Route::get('/tracks/{track}', [TrackController::class, 'show']);
