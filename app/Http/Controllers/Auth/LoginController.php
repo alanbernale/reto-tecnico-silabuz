@@ -10,11 +10,6 @@ use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @OA\Tag(
- *      name="Authentication",
- *      description="Operaciones relacionadas con la autenticación."
- *  )
- *
  * @OA\Info(
  *     title="API Deezer Clone",
  *     version="1.0",
@@ -34,6 +29,11 @@ use Symfony\Component\HttpFoundation\Response;
  *     type="http",
  *     scheme="bearer",
  *     bearerFormat="JWT",
+ * )
+ *
+ * @OA\Tag(
+ *      name="Authentication",
+ *      description="Operaciones relacionadas con la autenticación."
  * )
  */
 class LoginController extends Controller
