@@ -7,8 +7,8 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('authenticated user can fetch a list of albums', function () {
-    // Crear algunos álbumes de prueba en la base de datos
+test('El usuario autenticado puede obtener una lista de álbumes.', function () {
+    // Crear algunos artistas y álbumes de prueba en la base de datos
     Artist::factory()->count(5)->create();
     Album::factory()->count(5)->create();
 
@@ -16,19 +16,19 @@ it('authenticated user can fetch a list of albums', function () {
     $user = User::factory()->create();
     $token = $user->createToken('test-token')->plainTextToken;
 
-    // Hacer una solicitud GET a la ruta de la API con el token de autenticación para obtener detalles del álbum
+    // Hacer una solicitud GET a la ruta de la API con el token de autenticación para obtener los álbumes
     $response = $this->withHeaders(['Accept' => 'application/json'])
         ->get('/api/albums', ['Authorization' => 'Bearer ' . $token]);
 
     // Verificar que la solicitud fue exitosa (código de respuesta 200)
     $response->assertStatus(200);
 
-    // Verificar que el cuerpo de la respuesta contiene datos de álbumes
+    // Verificar que el cuerpo de la respuesta contiene álbumes
     $response->assertJsonCount(5, 'data');
 });
 
-it(' authenticated user can fetch details of a single album', function () {
-    // Crear un álbum de prueba en la base de datos
+test('El usuario autenticado puede obtener detalles de un solo álbum', function () {
+    // Crear un artista y álbum de prueba en la base de datos
     Artist::factory()->create();
     $album = Album::factory()->create();
 
@@ -36,23 +36,25 @@ it(' authenticated user can fetch details of a single album', function () {
     $user = User::factory()->create();
     $token = $user->createToken('test-token')->plainTextToken;
 
-    // Hacer una solicitud GET a la ruta de la API con el token de autenticación para obtener detalles del álbum
-    $response = $this->getJson("api/albums/{$album->id}", ['Authorization' => 'Bearer ' . $token]);
+    // Hacer una solicitud GET a la ruta de la API con el token de autenticación para obtener el álbum
+    $response = $this->withHeaders(['Accept' => 'application/json'])
+        ->get("api/albums/{$album->id}", ['Authorization' => 'Bearer ' . $token]);
 
     // Verificar que la solicitud fue exitosa (código de respuesta 200)
     $response->assertStatus(200);
 
-    // Verificar que el cuerpo de la respuesta contiene datos del álbum
+    // Verificar que el cuerpo de la respuesta contiene el álbum
     $response->assertJson(['data' => $album->toArray()]);
 });
 
-it('returns a 404 response when trying to fetch details of a non-existing album', function () {
+test('Devuelve una respuesta 404 al intentar recuperar detalles de un álbum que no existe', function () {
     // Crear un usuario y autenticarlo
     $user = User::factory()->create();
     $token = $user->createToken('test-token')->plainTextToken;
 
-    // Intentar una solicitud GET a la ruta de la API con el token de autenticación para obtener detalles de un album que no existe en la base de datos
-    $response = $this->getJson('/api/albums/999', ['Authorization' => 'Bearer ' . $token]);
+    // Hacer una solicitud GET a la ruta de la API con el token de autenticación para un álbum que no existe
+    $response = $this->withHeaders(['Accept' => 'application/json'])
+        ->get('/api/albums/999', ['Authorization' => 'Bearer ' . $token]);
 
     // Verificar que la solicitud devuelva un código de respuesta 404
     $response->assertStatus(404);

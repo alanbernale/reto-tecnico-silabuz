@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SearchRequest extends FormRequest
+class LoginRequest extends FormRequest
 {
     /**
      * Determine si el usuario está autorizado a realizar esta solicitud.
@@ -22,19 +22,9 @@ class SearchRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'q' => ['required', 'string', 'max:128'],
-        ];
-    }
-
-    /**
-     * Obtenga atributos personalizados para los errores del validador.
-     *
-     * @return array
-     */
-    public function attributes(): array
-    {
-        return [
-            'q' => 'query',
+            'email' => ['required', 'email', 'max:64'],
+            'password' => ['required', 'string', 'max:128'],
+            'device_name' => ['required', 'string', 'max:255'],
         ];
     }
 }

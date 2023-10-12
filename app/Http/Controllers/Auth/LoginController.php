@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\LoginRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -38,12 +39,17 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class LoginController extends Controller
 {
+    /**
+     * Constructor del controlador
+     */
     public function __construct()
     {
         $this->middleware('auth:sanctum')->only(['logout']);
     }
 
     /**
+     * Método para el manejo de inicio de sesión. Devuelve un Token de acceso.
+     *
      * @OA\Post(
      *     path="/api/login",
      *     summary="Autenticación de usuarios",
@@ -94,26 +100,28 @@ class LoginController extends Controller
      *     )
      * )
      */
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $request->validate([
-            'email' => ['required', 'email', 'max:64'],
-            'password' => ['required', 'string', 'max:128'],
-            'device_name' => ['required', 'string', 'max:255'],
-        ]);
+        // Obtener los datos de entrada validados
+        $validated = $request->validated();
 
-        $user = User::where('email', $request->email)->first();
+        // Buscar el usuario relacionado con el email proporcionado
+        $user = User::where('email', $validated['email'])->first();
 
-        if (!$user || !Hash::check($request->password, $user->password)) {
+        // Si no existe usuario con el email proporcionado o la contraseña es incorrecta se lanza un error de validación
+        if (!$user || !Hash::check($validated['password'], $user->password)) {
             throw ValidationException::withMessages([
                 'email' => ['The provided credentials are incorrect.'],
             ]);
         }
 
-        return $user->createToken($request->device_name)->plainTextToken;
+        // Se retorna el token de acceso etiquetado con el nombre del dispositivo
+        return $user->createToken($validated['device_name'])->plainTextToken;
     }
 
     /**
+     * Método para el cierre de sesión. Elimina el token de acceso.
+     *
      * @OA\Post(
      *     path="/api/logout",
      *     summary="Desautenticación de usuarios",
@@ -131,8 +139,10 @@ class LoginController extends Controller
      */
     public function logout(Request $request)
     {
+        // Se elimina el token de acceso de la solicitud
         $request->user()->currentAccessToken()->delete();
 
+        // Se retorna una respuesta en formato JSON
         return response()->json([
             'token' => 'The token was removed.'
         ], Response::HTTP_OK);

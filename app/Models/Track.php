@@ -11,13 +11,23 @@ class Track extends Model
 {
     use HasFactory, HasUuids;
 
+    /**
+     * Los atributos que deben convertirse.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'readable' => 'boolean',
+        'explicit_lyrics' => 'boolean',
+    ];
+
     protected $with = [
         'artist',
         'album',
     ];
 
     /**
-     * Relación uno a muchos con el modelo Artist.
+     * Relación muchos a uno con el modelo Artist.
      *
      * @return BelongsTo
      */
@@ -27,7 +37,7 @@ class Track extends Model
     }
 
     /**
-     * Relación uno a muchos con el modelo Album
+     * Relación muchos a uno con el modelo Album
      *
      * @return BelongsTo
      */

@@ -4,7 +4,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('register method creates a new user and returns an access token', function () {
+test('Método de registro crea un nuevo usuario y devuelve un token de acceso.', function () {
     // Ejemplo de datos de prueba para el registro
     $userData = [
         'name' => 'Test User',
@@ -15,11 +15,11 @@ it('register method creates a new user and returns an access token', function ()
         'device_name' => 'test-device',
     ];
 
-    // Simular una solicitud HTTP POST al método 'register' con los datos de registro
+    // Simular una solicitud POST al método 'register' con los datos de registro
     $response = $this->withHeaders(['Accept' => 'application/json'])
         ->post('/api/register', $userData);
 
-    // Verificar que la respuesta sea exitosa (código 200)
+    // Verificar que la respuesta sea exitosa (código de respuesta 200)
     $response->assertStatus(200);
 
     // Verificar que se devuelve un token de acceso

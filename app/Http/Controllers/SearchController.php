@@ -15,13 +15,16 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class SearchController extends Controller
 {
+    /**
+     * Constructor del controlador
+     */
     public function __construct()
     {
         $this->middleware('auth:sanctum');
     }
 
     /**
-     * Handle the incoming request.
+     * Método para el manejo de la búsqueda de pistas. Devuelve una colección de pistas.
      *
      * @param SearchRequest $request
      * @return JsonResponse

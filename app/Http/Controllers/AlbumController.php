@@ -15,6 +15,9 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class AlbumController extends Controller
 {
+    /**
+     * Constructor del controlador
+     */
     public function __construct()
     {
         $this->middleware('auth:sanctum');

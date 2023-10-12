@@ -15,6 +15,9 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class TrackController extends Controller
 {
+    /**
+     * Constructor del controlador
+     */
     public function __construct()
     {
         $this->middleware('auth:sanctum');

@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Auth;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules;
 
-class SearchRequest extends FormRequest
+class RegisterRequest extends FormRequest
 {
     /**
      * Determine si el usuario está autorizado a realizar esta solicitud.
@@ -22,19 +24,11 @@ class SearchRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'q' => ['required', 'string', 'max:128'],
-        ];
-    }
-
-    /**
-     * Obtenga atributos personalizados para los errores del validador.
-     *
-     * @return array
-     */
-    public function attributes(): array
-    {
-        return [
-            'q' => 'query',
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'country' => ['required', 'string', 'max:64'],
+            'device_name' => ['required', 'string', 'max:255'],
         ];
     }
 }

@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('search method returns correct results', function () {
+test('search method returns correct results', function () {
     // Crear algunos datos de prueba en la base de datos
     $artist = Artist::factory()->create(['name' => 'Test Artist']);
     $album = Album::factory()->create(['title' => 'Test Album']);

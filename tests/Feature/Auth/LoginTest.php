@@ -5,7 +5,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('login method validates and authenticates user', function () {
+test('Método de inicio de sesión usuario validado y autenticado', function () {
     // Ejemplo de datos de prueba
     $userForm = [
         'email' => 'test@example.com',
@@ -20,18 +20,18 @@ it('login method validates and authenticates user', function () {
     // Crear un usuario de prueba
     $user = User::factory()->create($userForm);
 
-    // Simular una solicitud HTTP POST al método 'login'
+    // Simular una solicitud POST al método 'login'
     $response = $this->withHeaders(['Accept' => 'application/json'])
         ->post('/api/login', $userData);
 
-    // Verificar que la respuesta sea exitosa (código 200)
+    // Verificar que la respuesta sea exitosa (código de respuesta 200)
     $response->assertStatus(200);
 
     // Verificar que se devuelve un token de autenticación
     $this->assertNotEmpty($response->content());
 });
 
-it('login method returns error for invalid credentials', function () {
+test('Método de inicio de sesión devuelve un error por credenciales no válidas.', function () {
     // Ejemplo de datos de prueba con credenciales incorrectas
     $invalidUserData = [
         'email' => 'test@example.com',
@@ -39,11 +39,11 @@ it('login method returns error for invalid credentials', function () {
         'device_name' => 'test-device',
     ];
 
-    // Simular una solicitud HTTP POST al método 'login' con credenciales incorrectas
+    // Simular una solicitud POST al método 'login' con credenciales incorrectas
     $response = $this->withHeaders(['Accept' => 'application/json'])
         ->post('/api/login', $invalidUserData);
 
-    // Verificar que se devuelve un error de validación
+    // Verificar que se devuelve un error de validación (código de respuesta 422)
     $response->assertStatus(422);
 
     // Verificar que el mensaje de error es correcto

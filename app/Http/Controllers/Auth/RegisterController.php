@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\RegisterRequest;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
 
 /**
  * @OA\Tag(
@@ -18,6 +17,8 @@ use Illuminate\Validation\Rules;
 class RegisterController extends Controller
 {
     /**
+     * Método para el manejo de registro de usuarios. Devuelve un Token de acceso.
+     *
      * @OA\Post(
      *     path="/api/register",
      *     summary="Registro de usuario",
@@ -81,25 +82,23 @@ class RegisterController extends Controller
      *     )
      * )
      */
-    public function register(Request $request)
+    public function register(RegisterRequest $request)
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'country' => ['required', 'string', 'max:64'],
-            'device_name' => ['required', 'string', 'max:255'],
-        ]);
+        // Obtener los datos de entrada validados
+        $validated = $request->validated();
 
+        // Se crea un nuevo usuario con los datos de entrada
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'country' => $request->country,
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+            'country' => $validated['country'],
         ]);
 
+        // Se lanza un evento de nuevo usuario registrado
         event(new Registered($user));
 
-        return $user->createToken($request->device_name)->plainTextToken;
+        // Se retorna el token de acceso etiquetado con el nombre del dispositivo
+        return $user->createToken($validated['device_name'])->plainTextToken;
     }
 }
