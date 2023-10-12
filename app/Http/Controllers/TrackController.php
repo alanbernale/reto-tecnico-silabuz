@@ -7,6 +7,12 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @OA\Tag(
+ *      name="Tracks",
+ *      description="Operaciones relacionadas con las pistas."
+ * )
+ */
 class TrackController extends Controller
 {
     public function __construct()
@@ -16,6 +22,21 @@ class TrackController extends Controller
 
     /**
      * Mostrar una lista del recurso.
+     *
+     * @OA\Get(
+     *     path="/api/tracks",
+     *     summary="Obtener todos las pistas",
+     *     tags={"Tracks"},
+     *     operationId="trackIndex",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Lista de psitas",
+     *         @OA\Schema(
+     *             type="array",
+     *             @OA\Items(ref="#/definitions/Artist")
+     *         )
+     *     )
+     * )
      */
     public function index(): JsonResponse
     {
@@ -43,7 +64,30 @@ class TrackController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Muestra el recurso especificado.
+     *
+     * @OA\Get(
+     *     path="/api/tracks/{id}",
+     *     summary="Obtener los detalles de una pista",
+     *     tags={"Tracks"},
+     *     operationId="trackShow",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID de la pista a consultar",
+     *         required=true,
+     *         @OA\Schema(type="uuid"),
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Detalles de la pista",
+     *         @OA\Schema(ref="#/definitions/Artist")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Pista no encontrada"
+     *     )
+     * )
      */
     public function show(Track $track): JsonResponse
     {

@@ -238,6 +238,50 @@
                     }
                 }
             }
+        },
+        "/api/tracks": {
+            "get": {
+                "tags": [
+                    "Tracks"
+                ],
+                "summary": "Obtener todos las pistas",
+                "description": "Mostrar una lista del recurso.",
+                "operationId": "trackIndex",
+                "responses": {
+                    "200": {
+                        "description": "Lista de psitas"
+                    }
+                }
+            }
+        },
+        "/api/tracks/{id}": {
+            "get": {
+                "tags": [
+                    "Tracks"
+                ],
+                "summary": "Obtener los detalles de una pista",
+                "description": "Muestra el recurso especificado.",
+                "operationId": "trackShow",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la pista a consultar",
+                        "required": true,
+                        "schema": {
+                            "type": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalles de la pista"
+                    },
+                    "404": {
+                        "description": "Pista no encontrada"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -267,6 +311,10 @@
         {
             "name": "Authentication",
             "description": "Operaciones relacionadas con la autenticación."
+        },
+        {
+            "name": "Tracks",
+            "description": "Operaciones relacionadas con las pistas."
         }
     ]
 }
