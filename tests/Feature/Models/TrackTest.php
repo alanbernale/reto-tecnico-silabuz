@@ -28,3 +28,37 @@ it('authenticated user can fetch a list of tracks', function () {
     // Verificar que el cuerpo de la respuesta contiene detalles de las pistas
     $response->assertJsonCount(5, 'data');
 });
+
+it(' authenticated user can fetch details of a single track', function () {
+    // Crear un artista, album y track de prueba en la base de datos
+    Artist::factory()->create();
+    Album::factory()->create();
+    $track = Track::factory()->create();
+
+    // Crear un usuario y autenticarlo
+    $user = User::factory()->create();
+    $token = $user->createToken('test-token')->plainTextToken;
+
+    // Hacer una solicitud GET a la ruta de la API con el token de autenticación para obtener detalles de una pista
+    $response = $this->withHeaders(['Accept' => 'application/json'])
+        ->get("api/tracks/{$track->id}", ['Authorization' => 'Bearer ' . $token]);
+
+    // Verificar que la solicitud fue exitosa (código de respuesta 200)
+    $response->assertStatus(200);
+
+    // Verificar que el cuerpo de la respuesta contiene detalles de la pista
+    $response->assertJson(['data' => $track->toArray()]);
+});
+
+it('returns a 404 response when trying to fetch details of a non-existing track', function () {
+    // Crear un usuario y autenticarlo
+    $user = User::factory()->create();
+    $token = $user->createToken('test-token')->plainTextToken;
+
+    // Hacer una solicitud GET a la ruta de la API con el token de autenticación para obtener detalles de una pista que no existe
+    $response = $this->withHeaders(['Accept' => 'application/json'])
+        ->get('/api/tracks/999', ['Authorization' => 'Bearer ' . $token]);
+
+    // Verificar que la solicitud devuelva un código de respuesta 404
+    $response->assertStatus(404);
+});
